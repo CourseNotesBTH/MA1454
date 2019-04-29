@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="Logo" src="https://github.com/CourseNotesBTH/MA1444/raw/master/logo.png">
+  <img alt="Logo" src="https://github.com/CourseNotesBTH/MA1454/raw/master/logo.png">
 </p>
 
 MA1454 - Numerical Analysis
