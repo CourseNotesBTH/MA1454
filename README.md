@@ -2,10 +2,10 @@
   <img alt="Logo" src="https://github.com/CourseNotesBTH/MA1444/raw/master/logo.png">
 </p>
 
-MA1454 - Numerical analysis
+MA1454 - Numerical Analysis
 ======
 
-Course notes and the like for MA1454 - Numerical analysis
+Course notes and the like for MA1454 - Numerical Analysis
 
 [More courses](https://github.com/CourseNotesBTH) <br />
 See also [Programming Courses at BTH](https://github.com/ProgrammingCoursesBTH)
@@ -37,7 +37,7 @@ There are some different type of files that you may come across in each course n
 
 | File name | Labels | Description |
 | --------- | :----: | ----------- |
-| Cheat sheet.pdf | ⚠️📝  🇸🇪 | Everything necessary to pass the class in one paper. Every method, formula as well as all necessarry standard limits, derivatives, angles and more |
+| Cheat sheet.md | ⚠️📝  🇸🇪 | Everything necessary to pass the class in one paper. Every method, formula as well as all necessarry standard limits, derivatives, angles and more |
 
 # Purpose of the repository
 <a name="purpose"></a>

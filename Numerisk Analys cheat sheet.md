@@ -1,4 +1,4 @@
-# Numerisk analys - Cheat Sheet
+# Numerisk Analys - Cheat Sheet
 
 ## TODO
 
