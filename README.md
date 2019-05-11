@@ -37,7 +37,8 @@ There are some different type of files that you may come across in each course n
 
 | File name | Labels | Description |
 | --------- | :----: | ----------- |
-| Cheat sheet.md | ⚠️📝  🇸🇪 | Everything necessary to pass the class in one paper. Every method, formula as well as all necessarry standard limits, derivatives, angles and more |
+| Cheat sheet.md | ⚠️📝  🇸🇪 | Everything necessary to pass the class in one paper |
+| Cheat sheet.pdf | ⚠️📝 🇸🇪 | Rendered version of the same file |
 | Course notes.md | 🇸🇪 ⚠️ | Course notes from lectures held in 2019. Requires Typora or any other Markdown & MathJax compatible editor |
 | Course notes.pdf | 🇸🇪 ⚠️ | Rendered version of the same file |
 

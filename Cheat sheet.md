@@ -121,7 +121,7 @@ $$
 $$
 
 
-#### Simsons regel
+#### Simpsons regel
 
 $$
 \text{Tre punkter behövs} \quad [a,b,c] \quad \text{,} \quad c = \frac{a+b}{2} \\
@@ -154,7 +154,7 @@ $$
 
 $$
 n\text{ är antalet delintervall och } h \text{ är längden på intervallen} \\
-S(h) = \frac{h}{3}\left\{f(x_0) + 4f(x_1) + 2f(x_2) + \dots + 2f(x_{n-2}) + 4f(x_{n-1} + f(x_n)\right\} \quad \text{,} \quad x_i = a+ih \\
+S(h) = \frac{h}{3}\left\{f(x_0) + 4f(x_1) + 2f(x_2) + \dots + 2f(x_{n-2}) + 4f(x_{n-1}) + f(x_n)\right\} \quad \text{,} \quad x_i = a+ih \\
 R_T = \frac{b-a}{180}h^4f^{(4)}(\xi) \quad, \quad a \leq \xi \leq b \\
 h = \frac{b-a}{2n}
 $$
@@ -530,7 +530,7 @@ $$
 
 * ⚠️ Kvadraturformler
 * ⚠️❓ Trapetsreglen
-* ⚠️❓ Simsons regel
+* ⚠️❓ Simpsons regel
 * ✅ Trapets formlen
 * ✅ Simpsons formel
 * ✅ Richardsonextrapolation
@@ -544,3 +544,4 @@ $$
 * ⚠️ Vektornormer och matrisnormer
 
 ### Kapitel 6
+
