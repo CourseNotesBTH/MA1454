@@ -1,11 +1,20 @@
 # Numerisk Analys - Cheat Sheet
 
+Detta dokument inehåller en sammanställning av kursen. 
+Här finner du **formelsamling**, **exempel**, **Matlab tips** och en **checklista** på saker man sak kunna.
+Djupare förståelse för formlerna finns i Course notes eller kursboken.
+
 ## TODO
 
-* Ändar strukturen på kap 1
-* Gör om Checklistan till tabeller
+* Gör om Checklistan till tabeller?
+* Färdigställa kap 1, 2, 3, 4, 5, 6
+* Färdigställa checklista 1, 2, 3, 4, 5, 6
+* Lägg till Matlab tips!!
+* Tabort vissa exempel?
 
-## Cheat Sheet
+
+
+## Formelsamling, exempel och Matlab tips
 
 ### Kapitel 1
 
@@ -71,6 +80,7 @@ $$
 $$
 
 
+
 ####Signifikanta siffror
 
 $$
@@ -86,15 +96,9 @@ $$
 
 
 
-
-
 ### Kapitel 2
 
-
-
 ### Kapitel 3
-
-
 
 ### Kapitel 4
 
@@ -119,6 +123,7 @@ $$
 $$
 \bold{\text{Exempel}} \\
 $$
+
 
 
 #### Simpsons regel
@@ -289,6 +294,8 @@ x=
 \text{Insättning av x i Ax=b ger} \dots\\
 $$
 
+
+
 #### LU-faktorisering med pivotering
 
 Sammanfattnigsvis löser man ett linjärt ekvationssystem $Ax = b$
@@ -311,6 +318,8 @@ $$
 $$
 
 $$
+\bold{\text{Matlab tips}} \\
+\text{I matlab kan man skriva} \bold{\text{ norm(v, 1)}} \text{ där}\\
 \bold{\text{Exempel}} \\
 A = 
 \left(\begin{array}{cc} 
@@ -332,9 +341,9 @@ $$
 $$
 
 $$
-\bold{\text{Exempel}} \\
+\bold{\text{Matlab tips}} \\
+\text{I matlab kan man skriva} \bold{\text{ norm(v)}}, \qquad \text{där v är en vektor}
 $$
-
 
 **Maximum normen**
 $$
@@ -360,9 +369,10 @@ A =
 \implies ||A||_\infin = 7
 $$
 
-### Linjära minstakvadratproblem
 
-**Minstakvadrat**
+
+####Minstakvadrat
+
 $$
 x = \left(A^T A\right)A^Tb \\
 r = Ax-b \implies ||r||_2 = ||A(A^TA)^{-1}A^Tb-b||_2
@@ -479,9 +489,160 @@ r = Ax-b =
 $$
 
 
-**QR faktorisering**
 
-**Singularitetsfaktorisering (SVD)**
+####QR faktorisering
+
+
+
+####QR faktorisering med Householderspeglingar
+
+
+
+####Singularitetsfaktorisering (SVD)
+
+$$
+\text{Minstakvadratlösning}\\
+x = V_1\Sigma_1^{-1}U_1^Tb=A^+b \quad(\text{moore-Penrose pseudoinverse}) \\
+||r||_2 = ||U_2^Tb||_2 \\
+
+A =
+$$
+
+
+
+####Trunkerad SVD
+
+$$
+A = U_1\Sigma_1 V_1^T = \sum_{i=1}^r \sigma_iu_iv_i^T \\
+x = V_1\Sigma_1^{-1} U_1^Tb = \sum_{i=1}^r (u_i^Tb) \sigma_i^{-1}v_i \\
+\text{Där r är rangen till matrisen A}
+$$
+
+
+
+#### Postensmetoden
+
+$$
+\begin{align*}
+&x_0, \quad \text{startvektor}\\
+&\begin{array}{}
+	y_{k+1} = Ax_k \\
+	x_{k+1} = y_{k+1}/||y_{k+1}||_2  \\
+\end{array}
+\Bigg\rbrace \quad\text{för }k=0,1,\dots
+\end{align*} \\
+\text{ }\\
+
+\text{Iterationen avbryts med något vilkor av typ}\\
+||x_{k+1}-x_k|| \leq \delta , \quad \text{där } \delta \text{ är någon önskad gräns}\\
+\text{ }\\
+
+\text{Dominerade egenvärde}\\
+\lambda = \frac{x_{k+1}^TAx_{k+1}}{x_{k+1}^Tx_{k+1}}
+$$
+
+
+
+#### Invers iteration
+
+$$
+\begin{align*}
+&x_0, \quad \text{startvektor}\\
+&A = P^{-1}LU, \quad \text{LU-faktorisering med pivotering}\\
+&\left.\begin{array}{}
+	Lz_k  = Px_k\\
+	Uy_{k+1} = z_k \\
+	x_{k+1} = y_{k+1}/||y_{k+1}||\\
+\end{array}
+\right\} \quad\text{för }k=0,1,\dots
+\end{align*}\\
+\text{ }\\
+
+\text{Minsta egenvärde}\\
+\lambda = \frac{x_{k+1}^TAx_{k+1}}{x_{k+1}^Tx_{k+1}}\\
+\text{ }\\
+
+\bold{\text{Matlab tips}} \\
+\text{[L U P] = lu}(A) \text{ ger LU-faktoriseringen}
+$$
+
+#### Invers iteration med shift (uttalas "med shit" - Viet )
+
+$$
+\begin{align*}
+&\sigma_0, \quad \text{givet skift}\\
+&x_0, \quad \text{startvektor}\\
+&\left.\begin{array}{}
+(A-\sigma_kI) = P^{-1}LU\\
+Lz_k=Pxk\\
+Uy_{k+1} = z_k\\
+x_{k+1} = y_{k+1}/||y_{k+1}||\\
+\sigma_{k+1} = x_{k+1}^TAx_{k+1}
+\end{array}
+\right\}\qquad\text{för }k=0,1,\dots\\
+\end{align*}\\
+\text{ }\\
+\text{Ett visst egenvärde nära ett givet tal }\sigma \\
+\lambda = \frac{x_{k+1}^TAx_{k+1}}{x_{k+1}^Tx_{k+1}}\\
+\text{ }\\
+
+\bold{\text{Matlab tips}}\\
+\bold{\text{eye(size(A))}} \text{ i matlab ger identitetsmatris till A}
+$$
+
+
+
+#### Ortogonal iteration
+
+$$
+\begin{align*}
+&X_0, \quad \text{ startmatris } n \times p \text{ med rang } p\\
+&\left.\begin{array}{}
+Q_kR_k = X_{k-1}\\
+X_k = AQ_k
+\end{array}
+\right\} \quad \text{för } k = 1,2,\dots
+\end{align*}
+$$
+
+
+
+####QR iteration
+
+$$
+\begin{align*}
+&A_0 = A\\
+&\left.\begin{array}{}
+Q_kR_k = A_{k-1}\\
+A_k = R_kQ_k
+\end{array}
+\right\} \quad \text{för } k = 1,2,\dots
+\end{align*}\\
+\text{ }\\
+\text{Egenvärdena ligger på diagonalen}
+$$
+
+
+
+####QR iteration med skift
+
+$$
+\begin{align*}
+&A_0 = A\\
+&\left.\begin{array}{}
+Q_kR_k = A_{k-1}-\sigma_kI\\
+A_k = R_kQ_k+\sigma_kI
+\end{array}
+\right\} \quad \text{för } k = 1,2,\dots
+\end{align*}\\
+\text{ }\\
+\text{Egenvärdena ligger på diagonalen}
+$$
+
+**Val av sigma:**
+
+* Vid enkelt skift tar vi $\sigma_k$ som elementet på plats $(n, n)$ i matrisen $A_{k-1}$
+* Med Wilkinsons skift väljer vi $\sigma_k$ som det egenvärde till $2 \times 2$ i nedre högra hörnet av $A_{k-1}$ som är närmsta elementet på plats $(n,n)$ i matrisen $A_{k-1}$
 
 ### Kapitel 6
 
@@ -491,11 +652,14 @@ $$
 
 ### Wordlist
 
-| Sybol | Krav med hänseende till tentamen                             |
-| :---: | :----------------------------------------------------------- |
-|   ✅   | Ska kunna                                                    |
-|   ⚠️   | Förkunskap till de andra formlerna som man bör ha koll på, men nödvändigt vis kunna |
-|   ❓   | Osäker om man behöver kunna                                  |
+| Sybol | Krav med hänseende till tentamen   |
+| :---: | :--------------------------------- |
+|   ✅   | Ska kunna                          |
+|   ❌   | Behöver inte kunna                 |
+|   ⚠️   | Förkunskap till de andra formlerna |
+|   ❓   | Osäker på mitt val                 |
+
+**Not:** Detta är min åsikt och är antagligen inte korrekt!
 
 ### Kapitel 1
 
@@ -541,7 +705,12 @@ $$
 
 * ⚠️ LU-faktorisering
 * ✅ LU-faktorisering med pivotering
-* ⚠️ Vektornormer och matrisnormer
+* ✅ Vektornormer och matrisnormer
+* ⚠️ Minstakvadrat
+* ⚠️ QR faktorisering
+* ✅ QR faktorisering med Householderspeglingar
+* ⚠️ Singularitetsfaktorisering (SVD)
+* ✅ Trunkerad SVD
 
 ### Kapitel 6
 
