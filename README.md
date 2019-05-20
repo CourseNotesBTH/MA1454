@@ -20,6 +20,7 @@ There are some different type of files that you may come across in each course n
 | ✅  | Complete course notes. Usually containing examples and structure similar to that of the lectures' |
 | 📝 | Revision notes. Usually short summaries and examples for use before an exam |
 | ⚠️ | Incomplete notes. May be lacking notes from lectures or be otherwise incomplete |
+| 👨‍💻 | Example code |
 | 🏳️ | Language unknown or not of importance |
 | 🇸🇪 | Written in Swedish |
 | 🇬🇧 | Written in English |
@@ -41,7 +42,7 @@ There are some different type of files that you may come across in each course n
 | Cheat sheet.pdf | ⚠️📝 🇸🇪 | Rendered version of the same file |
 | Course notes.md | 🇸🇪 ⚠️ | Course notes from lectures held in 2019. Requires Typora or any other Markdown & MathJax compatible editor |
 | Course notes.pdf | 🇸🇪 ⚠️ | Rendered version of the same file |
-| Uppgift6.m |  | Lösningsförslag till tenta fråga 6 |
+| Uppgift6.m | 👨‍💻 | Solution proposal for exam question 6 |
 
 # Purpose of the repository
 <a name="purpose"></a>
