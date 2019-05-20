@@ -294,6 +294,11 @@ x=
 \text{Insättning av x i Ax=b ger} \dots\\
 $$
 
+$$
+\bold{\text{Matlab tips}} \\
+\bold{\text{lu}(A)} \text{ ger LU-faktoriseringen}
+$$
+
 
 
 #### LU-faktorisering med pivotering
@@ -305,7 +310,8 @@ Sammanfattnigsvis löser man ett linjärt ekvationssystem $Ax = b$
 - Lös det triangulära systemet $Ux = y$ med bakåtsubstitution för att få lösningen $x$ till det givna problemet $Ax = b$
 
 $$
-\bold{\text{Exempel}} \\
+\bold{\text{Matlab tips}} \\
+\bold{\text{lu}(A)} \text{ ger LU-faktoriseringen}
 $$
 
 
@@ -317,24 +323,6 @@ $$
 ||x||_1 = |x_1|+\dots+|x_n| = \sum_{i=1}^n |x_i|
 $$
 
-$$
-\bold{\text{Matlab tips}} \\
-\text{I matlab kan man skriva} \bold{\text{ norm(v, 1)}} \text{ där}\\
-\bold{\text{Exempel}} \\
-A = 
-\left(\begin{array}{cc} 
-2 & 3 & 1\\ 
-2 & 4 & -1\\
-1 & 1 & 1
-\end{array}\right)\\
-\text{ }\\
-\text{ }\\
-\text{Kollumnsumma}\\
-\left(\begin{array}{cc} 
-5 & 8 & 3
-\end{array}\right)
-\implies ||A||_1 = 8
-$$
 **Euklidiska normen**
 $$
 ||x||_2 = \sqrt{|x_1|^2+\dots+|x_n|^2} = \sqrt{\sum_{i=1}^n |x_i|^2}
@@ -348,25 +336,6 @@ $$
 **Maximum normen**
 $$
 ||x||_\infin = \max\{|x_1|+\dots+|x_n|\} = \max_{1\leq i\leq n}|x_i|
-$$
-
-$$
-\bold{\text{Exempel}} \\
-A = 
-\left(\begin{array}{cc} 
-2 & 3 & 1\\ 
-2 & 4 & -1\\
-1 & 1 & 1
-\end{array}\right)\\
-\text{ }\\
-\text{ }\\
-\text{Radsumman}\\
-\left(\begin{array}{cc} 
-6\\
-7\\
-3
-\end{array}\right)
-\implies ||A||_\infin = 7
 $$
 
 
@@ -644,7 +613,107 @@ $$
 * Vid enkelt skift tar vi $\sigma_k$ som elementet på plats $(n, n)$ i matrisen $A_{k-1}$
 * Med Wilkinsons skift väljer vi $\sigma_k$ som det egenvärde till $2 \times 2$ i nedre högra hörnet av $A_{k-1}$ som är närmsta elementet på plats $(n,n)$ i matrisen $A_{k-1}$
 
+
+
 ### Kapitel 6
+
+#### Approximation av derivator
+
+$$
+\text{h är steglängden och bör va liten. typ} <0.01\\
+\text{ }\\ 
+\begin{array}{c c c }
+\text{frammåtdifferens} & \text{bakåtdifferens} & \text{centraldifferens} \\
+f'(x) = \frac{f(x+h)-f(x)}{h}& f'(x) = \frac{f(x) - f(x-h)}{h} &\frac{f(x+h) - f(x-h)}{2h}\\
+|R_f| \leq \frac{\delta(|f(x+h)| + |f(x)|)}{h} & |R_f| \leq \frac{\delta(|f(x)| + |f(x-h)|)}{h} & |R_f| \leq \frac{\delta(|f(x+h)| + |f(x-h)|)}{2h}
+\end{array}\\
+\text{ }\\
+\;\\
+\begin{array}{c c}
+\text{trunkeringsfel} & \text{trunkreingsfelet för centraldifferens}\\
+R_T = \frac{h}{2}f''(\xi) & R_T = \frac{h^2}{6}f^{(3)}(\xi)
+\end{array}
+$$
+
+
+$$
+\text{Andra derivatan frammåtdifferens}\\
+f''(x) = \frac{f'(x+h) - f'(x)}{h} = \frac{1}{h}(f(x-h)-2f(x)+f(x+h))
+$$
+
+
+#### Richardsonextrapolation
+
+$$
+D^{(2)}(h) = D(h) + \frac{D(h)-D(2h)}{3}, \quad \text{där } ?D(h) = f'(x)? \\
+\text{ }\\
+|R_f| \leq |D(h) - D(2h)|
+$$
+
+
+
+#### Begynnelsevärdesproblem för ordinära differentialekvationer
+
+Se slide
+
+Om man har en högre ordning måste man skriva om till ett system. Se bild på telefonen.
+
+
+
+#### Differensmetoder för ordinära differentialekvationer
+
+$$
+\begin{array}{c c}
+\text{Eulers framåtmetod} & \text{Eulers bakåtmetod}\\
+y_{k+1} = y_k+hf(t_k,y_k) & y_{k+1} = y_k +hf(t_{k+1},y_{k+1})\\ \\
+\text{mittpunktsmetoden} & \text{trapetsmetoden}\\
+y_{k+1} = y_{k-1} + 2hf(t_k, y_k) & y_{k+1} = y_k + \frac{h}{2}(f(t_{k+1},y_{k+1})+f(t_k, y_k))\\
+\end{array}
+$$
+
+Dfferensmetoder för ordinära differentialekvationer kan kategoriseras som
+
+* Enstegs metod: man behöver känna $y_k$ för att beräkna $y_{k+1}$
+* Flerstegs metod: man behöver känna $y_{k-1}$ och $y_k$ för att kunna beräkna $y_{k+1}$
+* Explicita metod: sätter in $y_k$ respektive $y_{k-1}$ och $y_k$ i högerledet för att få fram $y_{k+1}$
+* Implicita metod: måste lösa ickelinjärt ekvationssytem i varje steg för att få fram $y_{k+1}$
+
+| **Metoder**        | **Ensteg** | **Flersteg** | **Explicita** | **Implicita** |
+| ------------------ | :--------: | :----------: | :-----------: | :-----------: |
+| Eulers framåtmetod |     X      |              |       X       |               |
+| Eulers bakåtmetod  |     X      |              |               |       X       |
+| Mittpunktmetoden   |            |      X       |       X       |               |
+| Trapetsmetoden     |     X      |              |               |       X       |
+
+
+
+####Noggranhet och stabilitet hos differensmetoder
+
+$$
+\begin{array}{c c}
+\text{Lokal trunkeringsfel} & \text{Global trunkeringsfel}\\
+L_k = y_k-u_{k-1}(t_k) & G_k = y_k - u_0(t_k) = y_k-y(t_k)
+\end{array}
+$$
+
+Stabilitet för Eulers Bakåt, Eulers framåt och trapets
+
+
+
+#### Prediktor-korrektormetoder
+
+...
+
+#### Runge-Kuttametoder
+
+$$
+y_{k+1} = y_k + h \sum_{i=1}^s b_i k_i, \quad \text{där}\\
+k_i = f(t_k + c_ih , y_k + h\sum_{j=1}^sa_{ij} k_j)
+$$
+
+
+
+#### Tvåpunkts rendvärdesproblem
 
 
 
@@ -704,13 +773,36 @@ $$
 ### Kapitel 5
 
 * ⚠️ LU-faktorisering
-* ✅ LU-faktorisering med pivotering
+* ⚠️ LU-faktorisering med pivotering
 * ✅ Vektornormer och matrisnormer
 * ⚠️ Minstakvadrat
 * ⚠️ QR faktorisering
 * ✅ QR faktorisering med Householderspeglingar
-* ⚠️ Singularitetsfaktorisering (SVD)
+* ✅ Singularitetsfaktorisering (SVD)
 * ✅ Trunkerad SVD
+* ⚠️ Postensmetoden
+* ✅ Invers iteration
+* ✅ Invers iteration med shift
+* ⚠️ Ortogonal iteration
+* ✅ QR iteration
+* ✅ QR iteration med skift
+
+**Kommentar:** Baserat på gammla tentor kommer uppgiften ifrån detta kappitlet handla om QR iteration eller QR faktorisering
 
 ### Kapitel 6
 
+* ⚠️ Approximation av derivator
+* ❌ Richardsonextrapolation
+* ✅ Begynnelsevärdesproblem för ordinära differentialekvationer
+* ✅ Differensmetoder för ordinära differentialekvationer
+* ❌ Noggranhet och stabilitet hos differensmetoder
+* ✅ Prediktor-korrektormetoder
+* Runge-Kuttametoder
+
+**Kommentar:** Med stor sannolikhet kommer det komma en uppgift på Eulers frammåt metod som ska användas för att lösa begynnelse villkor för en diff. Det kommer även komma predikar-korrektor metod. 
+
+
+
+### Kapitel 1337
+
+* ✅ Onlinepizza.se
