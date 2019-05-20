@@ -41,6 +41,7 @@ There are some different type of files that you may come across in each course n
 | Cheat sheet.pdf | ⚠️📝 🇸🇪 | Rendered version of the same file |
 | Course notes.md | 🇸🇪 ⚠️ | Course notes from lectures held in 2019. Requires Typora or any other Markdown & MathJax compatible editor |
 | Course notes.pdf | 🇸🇪 ⚠️ | Rendered version of the same file |
+| Uppgift6.m |  | Lösningsförslag till tenta fråga 6 |
 
 # Purpose of the repository
 <a name="purpose"></a>
