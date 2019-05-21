@@ -715,11 +715,44 @@ $$
 
 #### Tvåpunkts rendvärdesproblem
 
+$$
+(RVP) \left\{ 
+\begin{array}{c}
+\begin{align*}
+\alpha y''+\beta y' + \gamma y &= f(t)\\
+ y(0) &= c_1\\
+ y(1) &= c_2
+ \end{align*}
+ \end{array}\right.
+$$
+
+Skriv om $y''$ och $y'$ till en funktion av y
+$$
+\left\{
+\begin{array}{C}
+\begin{align*}
+	\frac{\alpha}{h^2}(y_{i-1}-2y_i+y_{i+1}) + \frac{\beta}{2h}(y_{i+1} - y_{i-1}) + \gamma y_i &= f_i\\
+	y_1 &= c_1\\
+	y_n &= c_2
+	\end{align*}
+\end{array}
+\right.
+$$
+
+
+####  Inskjutningsmetoden
+
+...
+
 
 
 ##Checklista på saker man ska kunna
 
 ### Wordlist
+
+**Not:** Detta är min åsikt och är antagligen inte korrekt!
+
+**Tips:** Om man kan lösa all exempeluppgifter ifrån slides är man bra förberedd!
 
 | Sybol | Krav med hänseende till tentamen   |
 | :---: | :--------------------------------- |
@@ -727,8 +760,6 @@ $$
 |   ❌   | Behöver inte kunna                 |
 |   ⚠️   | Förkunskap till de andra formlerna |
 |   ❓   | Osäker på mitt val                 |
-
-**Not:** Detta är min åsikt och är antagligen inte korrekt!
 
 ### Kapitel 1
 
