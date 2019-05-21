@@ -45,6 +45,7 @@ There are some different type of files that you may come across in each course n
 | Solutions/Example Exam.m | 👨‍💻 | Solution proposal for example exam question 6 2019 |
 | Solutions/Exam May 27th, 2016 | 👨‍💻 | Solutions for exam from May 27th, 2016 |
 | Example Questions/Chapter N | 🇸🇪 | Examples from chapter N. From courses held in 2019 |
+| Example Questions/Solitions | 👨‍💻 | Solutions for example questions from chapters. From courses held in 2019 |
 
 # Purpose of the repository
 <a name="purpose"></a>
