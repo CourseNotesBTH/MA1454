@@ -44,7 +44,7 @@ pp_a = spline(interval_a, f(interval_a')');
 pp_b = spline(interval_b, f(interval_b')');
 % Create functions for later use. These uses ppval to get a value for the
 % corresponding x values from the control points
-s_a = @(x) ppval(pp_b, x);
+s_a = @(x) ppval(pp_a, x);
 s_b = @(x) ppval(pp_b, x);
 
 hold on

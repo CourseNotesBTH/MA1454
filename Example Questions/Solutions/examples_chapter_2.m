@@ -41,8 +41,39 @@ fprintf("Approximation is %f\n", x);
 fprintf("Control: function value at %f is %f. Should be 0\n", x, f(x));
 
 %% 2.4
+clear all
+format long
 
-%...?
+% Note: since it's not equal to 0, move the y-value over to the left hand
+% side for each function
+f1 = @(x1, x2, x3) x1^2 + x2^2 + x3^2 - 3;
+f2 = @(x1, x2, x3) x1^2 - x2;
+f3 = @(x1, x2, x3) x2^2 + x3 -2;
+
+% Calculate the matrix by hand. Each row corresponds to a function. Each
+% column to a certain x
+J = @(x1, x2, x3) [2 * x1, 2 * x2, 2 * x3; 2 * x1, -1, 0; 0, 2 * x2, 1];
+
+% Initial guess
+X = [0.5; 0.5; 0.5];
+
+% Start error (should be large, at least larger than allowed_error)
+error = 1e100;
+allowed_error = 1e-16;
+
+while error > allowed_error
+    % Calculate the F matrix (aka f(x_k))
+    F = [f1(X(1), X(2), X(3)); f2(X(1), X(2), X(3)); f3(X(1), X(2), X(3))];
+    % Calculate the Y matrix (aka s_k)
+    Y = J(X(1), X(2), X(3))\-F;
+    X = X + Y
+    error = norm(Y);
+end
+
+fprintf("Solution is (%f, %f, %f)\n", X(1), X(2), X(3));
+fprintf("Controls: f1(X)=%f. Should be 0\n", f1(X(1), X(2), X(3)));
+fprintf("Controls: f2(X)=%f. Should be 0\n", f2(X(1), X(2), X(3)));
+fprintf("Controls: f3(X)=%f. Should be 0\n", f3(X(1), X(2), X(3)));
 
 %% 2.5
 clear all
@@ -120,5 +151,40 @@ fprintf("Approximation is %f\n", x);
 fprintf("Control: function value at %f is %f. Should be 0\n", x, f(x));
 
 %% 2.8
+% NOTE! Incomplete. Kan skalera
+% Note! Unlikely to be on the exam
 
-%...?
+f1 = @(x1, x2, x3) x1^2 + x2^2 + x3^2 / 2 - 1;
+f2 = @(x1, x2, x3) x1^2 / 3 - x2;
+f3 = @(x1, x2, x3) x2^2 / 2 + x3;
+
+% Skalera var för sig så att summan av absolutbeloppen av derivatan är
+% mindre än 1!
+% g1 får x1, g2 får x2, g3 får x3 -> skalera också!
+g1 = @(x1, x2, x3) f1(x1, x2, x3) + x1;
+g2 = @(x1, x2, x3) f2(x1, x2, x3) + x2;
+g3 = @(x1, x2, x3) f3(x1, x2, x3) + x1 + x2 + x3;
+
+% Calculate the matrix by hand. Each row corresponds to a function. Each
+% column to a certain x
+J = @(x1, x2, x3) [2 * x1, 2 * x2, 2*x3 / 2; 2 * x1 / 3, -x2, 0; 0, 2 * x2, x3];
+
+% Initial guess
+X = [0.5; 0.5; 0.5];
+
+% Start error (should be large, at least larger than allowed_error)
+error = 1e100;
+allowed_error = 1e-16;
+
+while error > allowed_error
+    % Calculate the F matrix (aka f(x_k))
+    X = [g1(X(1), X(2), X(3)); g2(X(1), X(2), X(3)); g3(X(1), X(2), X(3))];
+    % Calculate the Y matrix (aka s_k)
+    Y = J(X(1), X(2), X(3))\-X;
+    error = norm(Y);
+end
+
+fprintf("Solution is (%f, %f, %f)\n", X(1), X(2), X(3));
+fprintf("Controls: f1(X)=%f. Should be 0\n", f1(X(1), X(2), X(3)));
+fprintf("Controls: f2(X)=%f. Should be 0\n", f2(X(1), X(2), X(3)));
+fprintf("Controls: f3(X)=%f. Should be 0\n", f3(X(1), X(2), X(3)));
