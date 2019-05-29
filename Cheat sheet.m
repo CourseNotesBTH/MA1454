@@ -151,7 +151,9 @@ Y = f(X')';
 % Lös efter koefficienter med vander
 values = vander(X)\Y;
 
-p = @(x) values(1, 1)*x^9 + values(2, 1)*x^8 + values(3, 1)*x^7 + values(4, 1)*x^6 + values(5, 1)*x^5 + values(6, 1)*x^4 + values(7, 1)*x^3 + values(8, 1)*x^2 + values(9, 1)*x + values(10, 1);
+% Alternativt skrivsätt (bör redovisas i svar):
+% p = @(x) values(1, 1)*x^9 + values(2, 1)*x^8 + values(3, 1)*x^7 + values(4, 1)*x^6 + values(5, 1)*x^5 + values(6, 1)*x^4 + values(7, 1)*x^3 + values(8, 1)*x^2 + values(9, 1)*x + values(10, 1);
+p = @(x) polyval(values, x);
 
 clf
 hold on
@@ -161,6 +163,71 @@ fplot(p, [a, b]);
 hold off
 
 fprintf("Kontroll: p(3)=%f, borde vara %f\n", p(3), f(3));
+
+%% Polynominterpolation - Lagranges form
+clear all
+format long
+clf
+
+% Given funktion
+f = @(x) x.^3;
+% Givna x-värden (x0, x1, x2, x3)
+X = [-1, 0, 1, 2];
+% Given grad
+n = 3;
+
+% Täljaren x minus alla punkter förutom den vi granskar
+% med L3,0 menas grad 3, punkt 0. Med Li menas produkten av alla kvoter,
+% förutom den vi granskar
+% Nämnaren blir för varje punkt
+
+L0 = @(x) ((x - X(2)) * (x - X(3)) * (x - X(4))) / ((X(1) - X(2)) * (X(1) - X(3)) * (X(1) - X(4)));
+L1 = @(x) ((x - X(1)) * (x - X(3)) * (x - X(4))) / ((X(2) - X(1)) * (X(2) - X(3)) * (X(1) - X(4)));
+L2 = @(x) ((x - X(1)) * (x - X(2)) * (x - X(4))) / ((X(3) - X(1)) * (X(3) - X(2)) * (X(3) - X(4)));
+L3 = @(x) ((x - X(1)) * (x - X(2)) * (x - X(3))) / ((X(4) - X(1)) * (X(4) - X(2)) * (X(4) - X(3)));
+
+p3 = @(x) f(X(1)) * L0(x) + f(X(2)) * L1(x) + f(X(3)) * L2(x) + f(X(4)) * L3(x);
+
+% Kontroll: rita ut båda. Bör vara väldigt lika
+hold on
+fplot(p3, [-1, 2]);
+fplot(f, [-1, 2]);
+hold off
+
+%% Polynominterpolation - Newtons form
+clear all
+format long
+
+% TODO
+
+fprintf("Kontroll: p(3)=%f, borde vara %f\n", p(3), f(3));
+
+%% Splineinterpolation - rätta randvillkor (clamped boundaries)
+clear all
+format long
+clf
+
+% Funktion från uppgift
+y = @(x) 2 * x + 3 .* sin(x * 2);
+% Derivata
+dy = @(x) 2 + 3 / 2 .* cos(x * 2);
+
+% Intervall (ofta given)
+a = 0;
+b = 5;
+% Alla steg (50 kontrollpunkter för spline)
+x = linspace(0, 5, 50);
+yval = y(x')';
+
+% Intervall x, derivata för första värdet, intervall y, derivata för sista
+% värdet
+pp = spline(x, [dy(x(1)), yval, dy(x(end))]);
+S = @(x) ppval(pp, x);
+
+hold on
+scatter(x, yval);
+fplot(S, [a, b]);
+hold off
 
 %% Trapetsregeln
 clear all
