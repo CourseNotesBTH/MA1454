@@ -103,6 +103,32 @@ end
 
 fprintf("Lösningen är %f. Kontroll: f(%f) = %f, borde vara 0\n", x, x, f(x));
 
+%% Minstakvadratmetoden
+clear all
+format long
+clf
+
+% Givna punkter från uppgiften
+x = [-2 -1.1 -0.3 0 0.7 2.3];
+y = [4.9 3.2 -1.1 -1.8 -0.2 0.8];
+
+% Bestäm polynom av grad 3 - skapa matris A
+A = [x'.^3, x'.^2, x'.^1, x'.^0];
+
+% QR-faktorisera A
+[Q R] = qr(A);
+
+% Koefficienter (R^-1 * Q' * b)
+c = R\Q'*y';
+
+% Skapa polynom
+p = @(x) polyval(c, x);
+
+hold on
+scatter(x, y);
+fplot(p, [x(1), x(end)]);
+hold off
+
 %% Newtons metod för system
 clear all
 format long
@@ -135,7 +161,7 @@ fprintf("Kontroll: f2(x1, x2, x3) = %f, borde vara 0\n", f2(X(1), X(2), X(3)));
 fprintf("Kontroll: f3(x1, x2, x3) = %f, borde vara 0\n", f3(X(1), X(2), X(3)));
 
 
-%% Polynominterpolation - vander
+%% Polynominterpolation - Newtons form (vander)
 clear all
 format long
 
@@ -193,14 +219,6 @@ hold on
 fplot(p3, [-1, 2]);
 fplot(f, [-1, 2]);
 hold off
-
-%% Polynominterpolation - Newtons form
-clear all
-format long
-
-% TODO
-
-fprintf("Kontroll: p(3)=%f, borde vara %f\n", p(3), f(3));
 
 %% Splineinterpolation - rätta randvillkor (clamped boundaries)
 clear all
@@ -408,6 +426,41 @@ R = Q' * A;
 % Kontroll: QR = A
 A_hat = Q * R;
 
+%% LU-faktorisering
+clear all
+format long
+
+A1 = [2 -4 4 -2; 6 -9 7 -3; -1 -4 8 0];
+% Utgå från identitetsmatrisen och använd den första raden för att få bort
+% den värden i den första kolonnen
+E1 = [1 0 0; -3 1 0; 0.5 0 1];
+% Utför samma beräkningar på identitetsmatrisen
+l1 = E1 * eye(3);
+% Låt vektorn vara första kolonnen i matrisen
+l1 = l1(:,1);
+
+A2 = E1 * A1;
+% Utgå från identitetsmatrisen och använd den andra raden för att få bort
+% den värden i den andra kolonnen
+E2 = [1 0 0; 0 1 0; 0 2 1];
+l2 = E2 * eye(3);
+% Låt vektorn vara andra kolonnen i matrisen
+l2 = l2(:,2);
+
+A3 = E2 * A2;
+% Någorlunda onödigt här, men det är för att visa den interativa processen
+E3 = [1 0 0; 0 1 0; 0 0 1];
+l3 = E1 * eye(3);
+% Låt vektorn vara tredje kolonnen i matrisen
+l3 = l3(:,3);
+
+U = A3;
+L = [l1 l2 l3];
+
+% Kontroll (bör vara lika):
+A1
+L * U
+
 %% LU-faktorisering med partiell pivotering
 clear all
 % Skriv ut som bråk
@@ -478,6 +531,65 @@ X
 A * X
 b
 
+%% LU-faktorisering med partiell pivotering (alternativ)
+clear all
+format long
+
+A1 = [1 5 4; 2 0.5 1; 5 2 -3];
+
+% Flytta upp den rad med störst absolutbelopp till första raden
+temp = A1(1,:);
+A1(1,:) = A1(3,:);
+A1(3,:) = temp;
+% Utför samma radbyte på permutationsmatrisen
+P1 = eye(size(A1));
+temp = P1(1,:);
+P1(1,:) = P1(3,:);
+P1(3,:) = temp;
+
+% Utgå från identitetsmatrisen, få nollor under diagonalen i första
+% kolonnen
+E1 = [1 0 0; -0.4 1 0; -0.2 0 1];
+l1 = E1 * eye(3);
+l1 = l1(:,1);
+A2 = E1 * A1;
+
+% Flytta upp den rad med störst absolutbelopp till andra raden
+temp = A2(2,:);
+A2(2,:) = A2(3,:);
+A2(3,:) = temp;
+% Utför samma radbyte på permutationsmatrisen
+P2 = eye(size(A1));
+temp = P2(2,:);
+P2(2,:) = P2(3,:);
+P2(3,:) = temp;
+
+% Utgå från identitetsmatrisen, få nollor under diagonalen i första
+% kolonnen
+E2 = [1 0 0; 0 1 0; 0 0.3/4.6 1];
+l2 = E2 * eye(3);
+l2 = l2(:,2);
+A3 = E2 * A2;
+
+% Något onödigt, men fullföljer hur vi skrivit innan
+E3 = [1 0 0; 0 1 0; 0 0 1];
+l3 = E3 * eye(3);
+l3 = l3(:,3);
+
+L = [l1 l2 l3]
+U = A3
+% Observera ordningen
+P = P2 * P1
+
+% Kontroll: PA=LU
+P * A1 - L * U
+
+% Kontroll 2:
+[L U P] = lu(A1);
+L
+U
+P
+
 %% Potensmetoden ("största" egenvärdet)
 clear all
 format long
@@ -540,6 +652,49 @@ e = X' * A * X;
 % Kontroll: finns med i eig(A) (bör vara det största värdet)
 eig(A)
 fprintf("Egenvärdet med det minsta absolutbeloppet är %f\n", e);
+
+%% Invers iteration med skift
+clear all
+format long
+
+% Matris som anges i uppgiften
+A = [3 1 5; 4 1 2; 2 1 7];
+% Givet skift (om övriga egenvärden har hittats kan de användas som skift)
+% Vanligtvis får man testa lite olika värden för att se vad som ger ett
+% tidigare okänt egenvärde
+sigma = 1;
+
+% Identitetsmatris med samma dimension som A
+I = eye(size(A));
+AA = A - sigma * I;
+
+% Gissning (obs. normerad)
+X = [0.5; 0.5; 0.5];
+X = X / norm(X);
+
+% Tillåtet fel (anges ofta)
+epsilon = 1e-5;
+error = 1e100;
+
+while error > epsilon
+    old_X = X;
+
+    [L, U, P] = lu(AA);
+    
+    Z = L \ P * X;
+    Y = U \ Z;
+    X = Y / norm(Y);
+    sigma = X' * AA * X;
+    
+    error = norm(old_X - X);
+end
+
+% Beräkna egenvärdet - obs. står ej i formelsamling
+e = X' * A * X;
+
+% Kontroll: finns med i eig(A) (bör vara det största värdet)
+eig(A)
+fprintf("Egenvärdet är %f\n", e);
 
 %% QR-iteration
 

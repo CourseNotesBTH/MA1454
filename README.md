@@ -40,7 +40,7 @@ There are some different type of files that you may come across in each course n
 | --------- | :----: | ----------- |
 | Cheat sheet.md | ⚠️📝  🇸🇪 | Everything necessary to pass the class in one paper |
 | Cheat sheet.pdf | ⚠️📝 🇸🇪 | Rendered version of the same file |
-| Cheat sheet.m | 📝 🇸🇪 | Most of the formulas and algorithms from exams implemented in Matlab |
+| cheat_sheet.m | 📝 👨‍💻 🇸🇪 | Most of the formulas and algorithms from exams implemented in Matlab |
 | Course notes.md | 🇸🇪 ⚠️ | Course notes from lectures held in 2019. Requires Typora or any other Markdown & MathJax compatible editor |
 | Course notes.pdf | 🇸🇪 ⚠️ | Rendered version of the same file |
 | Solutions/example_exam.m | 👨‍💻 | Solution proposal for example exam question 6 2019 |
